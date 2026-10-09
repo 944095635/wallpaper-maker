@@ -21,25 +21,7 @@ class _FramePageState extends State<FramePage> {
         fit: .expand,
         children: [
           // 背景图片
-          ShaderMask(
-            shaderCallback: (rect) {
-              return LinearGradient(
-                colors: [
-                  const Color.fromRGBO(255, 255, 255, .95),
-                  const Color.fromRGBO(255, 255, 255, 1),
-                ],
-                stops: [0, .8],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ).createShader(rect);
-            },
-            blendMode: BlendMode.srcOver, // shader 画在 child 上面
-            child: Image.asset(
-              'images/bg.jpg',
-              fit: BoxFit.cover,
-              cacheWidth: 1600,
-            ),
-          ),
+          buildBackground(),
 
           Column(
             children: [
@@ -51,6 +33,29 @@ class _FramePageState extends State<FramePage> {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  /// 构建背景图片
+  Widget buildBackground() {
+    return ShaderMask(
+      shaderCallback: (rect) {
+        return const LinearGradient(
+          colors: [
+            Color.fromRGBO(255, 255, 255, .95),
+            Color.fromRGBO(255, 255, 255, 1),
+          ],
+          stops: [0, .8],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ).createShader(rect);
+      },
+      blendMode: BlendMode.srcOver,
+      child: Image.asset(
+        'images/bg.jpg',
+        fit: BoxFit.cover,
+        cacheWidth: 1600,
       ),
     );
   }
