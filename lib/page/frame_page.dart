@@ -17,13 +17,39 @@ class _FramePageState extends State<FramePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
+        fit: .expand,
         children: [
-          // 窗口标题栏
-          buildWindowCaption(),
+          // 背景图片
+          ShaderMask(
+            shaderCallback: (rect) {
+              return LinearGradient(
+                colors: [
+                  const Color.fromRGBO(255, 255, 255, .95),
+                  const Color.fromRGBO(255, 255, 255, 1),
+                ],
+                stops: [0, .8],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ).createShader(rect);
+            },
+            blendMode: BlendMode.srcOver, // shader 画在 child 上面
+            child: Image.asset(
+              'images/bg.jpg',
+              fit: BoxFit.cover,
+              cacheWidth: 1600,
+            ),
+          ),
 
-          // 窗口内容
-          Expanded(child: Container()),
+          Column(
+            children: [
+              // 窗口标题栏
+              buildWindowCaption(),
+
+              // 窗口内容
+              Expanded(child: Container()),
+            ],
+          ),
         ],
       ),
     );
@@ -32,10 +58,13 @@ class _FramePageState extends State<FramePage> {
   /// 构建窗口标题栏
   Widget buildWindowCaption() {
     return SizedBox(
-      height: 48,
+      height: 40,
       child: WindowCaption(
         title: Text('造物主壁纸'),
-        brightness: Theme.of(context).brightness,
+        backgroundColor: Colors.transparent,
+        brightness: Theme.of(context).brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark,
       ),
     );
   }
