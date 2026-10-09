@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nativeapi_flutter/nativeapi_flutter.dart';
+import 'package:window_manager/window_manager.dart';
 import 'package:wallpaper_maker/page/frame_page.dart';
 
 void main() {
@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Microsoft YaHei',
         colorScheme: ColorScheme.dark(surface: Colors.black),
       ),
+      debugShowCheckedModeBanner: false,
       locale: const Locale("zh", "CN"),
       home: const FramePage(),
     );

@@ -36,12 +36,12 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # 自定义窗口
-  nativeapi_flutter: ^0.5.2
+  # nativeapi_flutter: ^0.5.2
   # window_manager: ^0.6.0
-  # window_manager:
-  #   git:
-  #     url: https://github.com/leanflutter/window_manager.git
-  #     ref: main
+  window_manager:
+    git:
+      url: https://github.com/leanflutter/window_manager.git
+      ref: main
 
 dev_dependencies:
   flutter_test:
