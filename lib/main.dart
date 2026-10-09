@@ -37,10 +37,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '造物主壁纸',
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       darkTheme: ThemeData(
-        fontFamily: 'Microsoft YaHei',
-        colorScheme: ColorScheme.dark(surface: Colors.black),
+        fontFamily: 'MiSans', // 小米字体
+        colorScheme: ColorScheme.light(),
       ),
       debugShowCheckedModeBanner: false,
       locale: const Locale("zh", "CN"),

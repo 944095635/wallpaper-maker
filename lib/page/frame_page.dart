@@ -29,7 +29,15 @@ class _FramePageState extends State<FramePage> {
               buildWindowCaption(),
 
               // 窗口内容
-              Expanded(child: Container()),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    '造物主壁纸',
+                    style: TextStyle(fontSize: 40, color: Colors.black),
+                  ),
+                ),
+              ),
             ],
           ),
         ],
@@ -65,11 +73,15 @@ class _FramePageState extends State<FramePage> {
     return SizedBox(
       height: 40,
       child: WindowCaption(
-        title: Text('造物主壁纸'),
+        title: Text(
+          '造物主壁纸',
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: 'MiSans', // 这个组件好像不支持从主题中获取字体，只能手动指定
+          ),
+        ),
         backgroundColor: Colors.transparent,
-        brightness: Theme.of(context).brightness == Brightness.dark
-            ? Brightness.light
-            : Brightness.dark,
+        brightness: Brightness.light,
       ),
     );
   }
