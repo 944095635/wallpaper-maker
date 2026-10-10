@@ -20,8 +20,12 @@ class _SettingPageState extends State<SettingPage> {
     text: '8686',
   );
   final TextEditingController _imageUrlController = TextEditingController(
-    text: 'https://picsum.photos/1920/1080',
+    text: "https://down.haowallpaper.com/project_file/2025_07_25_file/17323846557748608.mp4?zfsign=1791615411-3d7b4044d8fddfbe-0-18aa95ccdc12322a047a5ce774f6f002",
+    // text: 'https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/37989e59-411b-4dd0-9f0f-85720a04d5f3/transcode=true,original=true/Train_neon_graded.webm',
   );
+
+  // 300KB https://img.haowallpaper.com/pre_cache_file/2025_07_25_file/17323846557748608.mp4
+  //https://down.haowallpaper.com/project_file/2025_07_25_file/17323846557748608.mp4?zfsign=1791615411-3d7b4044d8fddfbe-0-18aa95ccdc12322a047a5ce774f6f002
 
   @override
   void dispose() {
@@ -97,13 +101,10 @@ class _SettingPageState extends State<SettingPage> {
             spacing: 10,
             children: [
               FilledButton(
-                onPressed: _isConnected ? _applyBackgroundPersist : null,
-                child: Text('应用背景(持久)'),
+                onPressed: _isConnected ? _applyBackgroundVideo : null,
+                child: Text('应用视频背景'),
               ),
-              FilledButton(
-                onPressed: _isConnected ? _applyBackgroundOnce : null,
-                child: Text('应用背景(临时)'),
-              ),
+
               FilledButton(
                 onPressed: _isConnected ? _resetBackground : null,
                 child: Text('重置背景'),
@@ -120,7 +121,10 @@ class _SettingPageState extends State<SettingPage> {
     final port = _portController.text.trim();
     Process.run(
       'C:\\Program Files\\NetEase\\CloudMusic\\CloudMusic.exe',
-      ['--remote-debugging-port=$port'],
+      [
+        '--remote-debugging-port=$port',
+        '--allow-file-access-from-files',
+      ],
     );
     _updateStatus('已发送启动命令，等待几秒后点击"连接"');
   }
@@ -148,54 +152,36 @@ class _SettingPageState extends State<SettingPage> {
     }
   }
 
-  /// 应用背景（持久化，刷新后仍生效）
-  Future<void> _applyBackgroundPersist() async {
-    final imageUrl = _imageUrlController.text.trim();
-    if (imageUrl.isEmpty) return;
-
-    _updateStatus('正在注入持久背景...');
-
-    try {
-      _injectedScriptId = await _bgService.setBackgroundImage(imageUrl);
-      _updateStatus('持久背景已注入 (id: $_injectedScriptId)，刷新页面仍有效');
-    } catch (e) {
-      _updateStatus('注入失败: $e');
-    }
-  }
-
-  /// 应用背景（临时，刷新后失效）
-  Future<void> _applyBackgroundOnce() async {
-    final imageUrl = _imageUrlController.text.trim();
-    if (imageUrl.isEmpty) return;
-
-    _updateStatus('正在注入临时背景...');
-
-    try {
-      await _bgService.applyBackgroundNow(imageUrl);
-      _updateStatus('临时背景已应用，刷新页面后失效');
-    } catch (e) {
-      _updateStatus('注入失败: $e');
-    }
-  }
-
   /// 重置背景
   Future<void> _resetBackground() async {
     _updateStatus('正在重置...');
 
     try {
-      if (_injectedScriptId != null) {
-        await _bgService.removeInjectedScript(_injectedScriptId!);
-        _injectedScriptId = null;
-      }
-
-      await _bgService.evaluateJs('''
-        document.body.style.background = '';
-        document.body.style.backgroundImage = '';
-      ''');
+      await _bgService.resetBackground();
 
       _updateStatus('背景已重置');
     } catch (e) {
       _updateStatus('重置失败: $e');
+    }
+  }
+
+  /// 应用视频背景
+  Future<void> _applyBackgroundVideo() async {
+    final imageUrl = _imageUrlController.text.trim();
+    if (imageUrl.isEmpty) return;
+
+    _updateStatus('正在注入视频背景...');
+
+    try {
+      await _bgService.applyBackgroundVideoNow(
+        imageUrl,
+        opacity: 1,
+        blur: 0,
+        brightness: 1,
+      );
+      _updateStatus('视频背景已应用，刷新页面后失效');
+    } catch (e) {
+      _updateStatus('注入失败: $e');
     }
   }
 
@@ -207,6 +193,7 @@ class _SettingPageState extends State<SettingPage> {
 
   /// 更新状态
   void _updateStatus(String text) {
+    debugPrint(text);
     setState(() {
       _statusText = text;
     });
