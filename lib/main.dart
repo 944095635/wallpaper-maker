@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
       title: '造物主壁纸',
       themeMode: ThemeMode.light,
       theme: ThemeData(
-        fontFamily: 'MiSans', // 小米字体
+        //fontFamily: 'MiSans', // 小米字体
+        fontFamily: 'Microsoft YaHei',
         colorScheme: ColorScheme.light(
           primary: Colors.black,
         ),

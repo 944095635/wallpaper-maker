@@ -20,7 +20,7 @@ class FrameTabItem extends StatelessWidget {
       spacing: 5,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 1.0),
+          padding: const EdgeInsets.only(top: 2.0),
           child: HugeIcon(icon: icon, size: 18),
         ),
         Text(title),
