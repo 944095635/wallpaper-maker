@@ -40,12 +40,29 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       theme: ThemeData(
         fontFamily: 'MiSans', // 小米字体
-        colorScheme: ColorScheme.light(),
+        colorScheme: ColorScheme.light(
+          primary: Colors.black,
+        ),
         appBarTheme: AppBarTheme(
           toolbarHeight: 40,
           elevation: 0,
           scrolledUnderElevation: 0,
           backgroundColor: Colors.transparent,
+        ),
+        tabBarTheme: TabBarThemeData(
+          dividerHeight: 0,
+          indicatorColor: Colors.black,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.black,
+          indicator: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          labelPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+          indicatorSize: TabBarIndicatorSize.tab,
+          splashBorderRadius: BorderRadius.circular(8),
+          // splashFactory: NoSplash.splashFactory,
+          // overlayColor: WidgetStatePropertyAll(Colors.transparent),
         ),
       ),
       debugShowCheckedModeBanner: false,

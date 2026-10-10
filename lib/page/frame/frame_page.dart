@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:wallpaper_maker/page/frame/frame_menu_item.dart';
+import 'package:wallpaper_maker/page/frame/frame_tab_item.dart';
 import 'package:wallpaper_maker/page/home/home_page.dart';
 
 class FramePage extends StatefulWidget {
@@ -12,6 +14,9 @@ class FramePage extends StatefulWidget {
 }
 
 class _FramePageState extends State<FramePage> {
+  /// 选中的菜单
+  int _selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +32,7 @@ class _FramePageState extends State<FramePage> {
           buildBackground(),
 
           Column(
+            crossAxisAlignment: .stretch,
             children: [
               // 窗口标题栏
               SizedBox(
@@ -82,6 +88,30 @@ class _FramePageState extends State<FramePage> {
 
   /// 导航菜单
   Widget buildMenu() {
+    return DefaultTabController(
+      length: 3,
+      child: TabBar(
+        isScrollable: true,
+        tabAlignment: .start,
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        tabs: [
+          FrameTabItem(
+            icon: HugeIcons.strokeRoundedSaturn,
+            title: '今日推荐',
+          ),
+          FrameTabItem(
+            icon: HugeIcons.strokeRoundedImages,
+            title: '我的壁纸',
+          ),
+          FrameTabItem(
+            icon: HugeIcons.strokeRoundedDownload05,
+            title: '正在下载',
+          ),
+        ],
+      ),
+    );
+
+    // 自定义菜单
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
@@ -90,26 +120,20 @@ class _FramePageState extends State<FramePage> {
           FrameMenuItem(
             icon: HugeIcons.strokeRoundedSaturn,
             title: '今日推荐',
-            isSelected: true,
+            isSelected: _selectedIndex == 0,
+            onTap: () => _selectMenuItem(0),
           ),
           FrameMenuItem(
             icon: HugeIcons.strokeRoundedImages,
             title: '我的壁纸',
+            isSelected: _selectedIndex == 1,
+            onTap: () => _selectMenuItem(1),
           ),
           FrameMenuItem(
             icon: HugeIcons.strokeRoundedDownload05,
             title: '正在下载',
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.transparent,
-            ),
-            onPressed: () {},
-            child: HugeIcon(icon: HugeIcons.strokeRoundedDownload05),
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: HugeIcon(icon: HugeIcons.strokeRoundedDownload05),
+            isSelected: _selectedIndex == 2,
+            onTap: () => _selectMenuItem(2),
           ),
         ],
       ),
@@ -120,4 +144,76 @@ class _FramePageState extends State<FramePage> {
   Widget buildContent() {
     return HomePage();
   }
+
+  /// 切换选中的菜单
+  void _selectMenuItem(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 }
+
+// Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 20.0),
+//         child: Align(
+//           alignment: Alignment.centerLeft,
+//           child: CupertinoSlidingSegmentedControl<int>(
+//             groupValue: _selectedIndex,
+//             proportionalWidth: false,
+//             // backgroundColor: Colors.transparent,
+//             children: {
+//               0: Padding(
+//                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//                 child: Row(
+//                   spacing: 4,
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     const HugeIcon(
+//                       icon: HugeIcons.strokeRoundedSaturn,
+//                       size: 19,
+//                     ),
+//                     Text('今日推荐'),
+//                   ],
+//                 ),
+//               ),
+//               1: Padding(
+//                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//                 child: Row(
+//                   spacing: 4,
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     const HugeIcon(
+//                       icon: HugeIcons.strokeRoundedImages,
+//                       size: 19,
+//                     ),
+//                     Text('我的壁纸'),
+//                   ],
+//                 ),
+//               ),
+//               2: Padding(
+//                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//                 child: Row(
+//                   spacing: 4,
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     const HugeIcon(
+//                       icon: HugeIcons.strokeRoundedDownload05,
+//                       size: 19,
+//                     ),
+//                     Text('正在下载'),
+//                   ],
+//                 ),
+//               ),
+//             },
+//             onValueChanged: (value) {
+//               setState(() {
+//                 _selectedIndex = value ?? 0;
+//               });
+//             },
+//           ),
+//         ),
+//       ),
+
+//       SizedBox(
+//         height: 10,
+//       ),

@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return GridView.builder(
       itemCount: wallpapers.length,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,

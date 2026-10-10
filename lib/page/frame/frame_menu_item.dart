@@ -7,6 +7,7 @@ class FrameMenuItem extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
+    this.onTap,
     this.isSelected = false,
   });
 
@@ -18,6 +19,9 @@ class FrameMenuItem extends StatelessWidget {
 
   /// 是否选中
   final bool isSelected;
+
+  /// 点击事件
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,27 +42,33 @@ class FrameMenuItem extends StatelessWidget {
       foregroundColor = Colors.black;
     }
 
-    return InkWell(
-      highlightColor: Colors.red,
-      child: Container(
-        decoration: decoration,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Row(
-          spacing: 4,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 1.0),
-              child: HugeIcon(icon: icon, size: 18, color: foregroundColor),
-            ),
-            Text(
-              title,
-              style: TextStyle(
-                color: foregroundColor,
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(8),
+      child: InkWell(
+        hoverColor: Colors.black12, // 悬浮时显示的颜色
+        borderRadius: BorderRadius.circular(8),
+        onTap: onTap, // 必须有 onTap，否则悬浮不生效
+        child: Container(
+          decoration: decoration,
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          child: Row(
+            spacing: 4,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 1.0),
+                child: HugeIcon(icon: icon, size: 18, color: foregroundColor),
               ),
-            ),
-          ],
+              Text(
+                title,
+                style: TextStyle(
+                  color: foregroundColor,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
