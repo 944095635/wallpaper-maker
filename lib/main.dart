@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:wallpaper_maker/page/frame_page.dart';
+import 'package:wallpaper_maker/page/frame/frame_page.dart';
 
 void main() {
   final window = WindowManager.instance.getCurrent();
@@ -38,9 +38,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '造物主壁纸',
       themeMode: ThemeMode.light,
-      darkTheme: ThemeData(
+      theme: ThemeData(
         fontFamily: 'MiSans', // 小米字体
         colorScheme: ColorScheme.light(),
+        appBarTheme: AppBarTheme(
+          toolbarHeight: 40,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          backgroundColor: Colors.transparent,
+        ),
       ),
       debugShowCheckedModeBanner: false,
       locale: const Locale("zh", "CN"),
