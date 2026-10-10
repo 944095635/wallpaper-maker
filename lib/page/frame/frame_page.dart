@@ -1,10 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:wallpaper_maker/page/donwload/download_page.dart';
 import 'package:wallpaper_maker/page/frame/frame_menu_item.dart';
 import 'package:wallpaper_maker/page/frame/frame_tab_item.dart';
 import 'package:wallpaper_maker/page/home/home_page.dart';
+import 'package:wallpaper_maker/page/local/local_page.dart';
+import 'package:wallpaper_maker/page/setting/setting_page.dart';
 
 class FramePage extends StatefulWidget {
   const new({super.key});
@@ -24,41 +26,80 @@ class _FramePageState extends State<FramePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        fit: .expand,
-        children: [
-          // 背景图片
-          buildBackground(),
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        body: Stack(
+          fit: .expand,
+          children: [
+            // 背景图片
+            buildBackground(),
 
-          Column(
-            crossAxisAlignment: .stretch,
-            children: [
-              // 窗口标题栏
-              SizedBox(
-                height: 46,
-                child: WindowCaption(
-                  title: Text(
-                    '造物主壁纸门',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'MiSans', // 小米字体 必须设置，脱离Theme区域
+            Column(
+              crossAxisAlignment: .stretch,
+              children: [
+                // 窗口标题栏
+                SizedBox(
+                  height: 40,
+                  child: WindowCaption(
+                    title: Text(
+                      '造物主壁纸',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'MiSans', // 小米字体 必须设置，脱离Theme区域
+                      ),
                     ),
+                    brightness: Brightness.light,
+                    // backgroundColor: Colors.transparent,
+                    // brightness: Brightness.light,
                   ),
-                  brightness: Brightness.light,
-                  // backgroundColor: Colors.transparent,
-                  // brightness: Brightness.light,
                 ),
-              ),
 
-              // 导航菜单
-              buildMenu(),
+                // 导航菜单
+                TabBar(
+                  isScrollable: true,
+                  tabAlignment: .start,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 5,
+                  ),
+                  tabs: [
+                    FrameTabItem(
+                      icon: HugeIcons.strokeRoundedSaturn,
+                      title: '今日推荐',
+                    ),
+                    FrameTabItem(
+                      icon: HugeIcons.strokeRoundedImages,
+                      title: '我的壁纸',
+                    ),
+                    FrameTabItem(
+                      icon: HugeIcons.strokeRoundedDownload05,
+                      title: '正在下载',
+                    ),
+                    FrameTabItem(
+                      icon: HugeIcons.strokeRoundedSetting06,
+                      title: '系统设置',
+                    ),
+                  ],
+                ),
 
-              // 窗口内容
-              Expanded(child: buildContent()),
-            ],
-          ),
-        ],
+                Expanded(
+                  child: TabBarView(
+                    children: const [
+                      HomePage(),
+                      LocalPage(),
+                      DownloadPage(),
+                      SettingPage(),
+                    ],
+                  ),
+                ),
+
+                // 窗口内容
+                // Expanded(child: buildContent()),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -90,22 +131,36 @@ class _FramePageState extends State<FramePage> {
   Widget buildMenu() {
     return DefaultTabController(
       length: 3,
-      child: TabBar(
-        isScrollable: true,
-        tabAlignment: .start,
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-        tabs: [
-          FrameTabItem(
-            icon: HugeIcons.strokeRoundedSaturn,
-            title: '今日推荐',
+      child: Column(
+        children: [
+          TabBar(
+            isScrollable: true,
+            tabAlignment: .start,
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            tabs: [
+              FrameTabItem(
+                icon: HugeIcons.strokeRoundedSaturn,
+                title: '今日推荐',
+              ),
+              FrameTabItem(
+                icon: HugeIcons.strokeRoundedImages,
+                title: '我的壁纸',
+              ),
+              FrameTabItem(
+                icon: HugeIcons.strokeRoundedDownload05,
+                title: '正在下载',
+              ),
+            ],
           ),
-          FrameTabItem(
-            icon: HugeIcons.strokeRoundedImages,
-            title: '我的壁纸',
-          ),
-          FrameTabItem(
-            icon: HugeIcons.strokeRoundedDownload05,
-            title: '正在下载',
+
+          Expanded(
+            child: TabBarView(
+              children: [
+                HomePage(),
+                HomePage(),
+                HomePage(),
+              ],
+            ),
           ),
         ],
       ),

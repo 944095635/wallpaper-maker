@@ -64,6 +64,15 @@ class MyApp extends StatelessWidget {
           // splashFactory: NoSplash.splashFactory,
           // overlayColor: WidgetStatePropertyAll(Colors.transparent),
         ),
+        filledButtonTheme: FilledButtonThemeData(
+          style: ButtonStyle(
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+          ),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       locale: const Locale("zh", "CN"),
